@@ -1,0 +1,64 @@
+/* Trình triển khai các quy tắc CSS cho phần form đăng ký */
+
+#boo{
+    display: flex;
+}
+
+.col-lg-4{
+    margin-left: 210px;
+}
+
+.contact-form-wrap{
+    margin-top: 50px;
+}
+
+#form-dangki {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 50px;
+    margin-left: 50px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #form-dangki h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #form-dangki label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  #form-dangki input[type="text"],
+  #form-dangki input[type="email"],
+  #form-dangki input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgb(11, 11, 27);;
+    border-radius: 5px;
+  }
+  
+  #form-dangki input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #form-dangki input[type="submit"]:hover {
+    background-color: rgb(11, 11, 27);
+  }
+  
+  #form-dangki .error-message {
+    color: red;
+    font-size: 14px;
+  }
+  
