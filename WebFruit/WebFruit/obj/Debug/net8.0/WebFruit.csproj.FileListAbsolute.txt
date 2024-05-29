@@ -135,3 +135,13 @@ C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\obj\Debug\net8.0\refint\WebFru
 C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\obj\Debug\net8.0\WebFruit.pdb
 C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\obj\Debug\net8.0\WebFruit.genruntimeconfig.cache
 C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\obj\Debug\net8.0\ref\WebFruit.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\System.Net.Http.Formatting.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\WebFruit\obj\Debug\net8.0\WebFruit.sourcelink.json
