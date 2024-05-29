@@ -1,0 +1,120 @@
+﻿@model IEnumerable<ShoppingCarts>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Hỗ Trợ</p>
+                    <h1>Shopping Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Count() != 0)
+{
+    <!-- end breadcrumb section -->
+    <!-- cart -->
+    <div class="cart-section mt-150 mb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="cart-table-wrap">
+                        <table class="cart-table">
+                            <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th class="product-remove"></th>
+                                    <th class="product-image">Hình ảnh sản phẩm</th>
+                                    <th class="product-name">Tên</th>
+                                    <th class="product-price">Giá</th>
+                                    <th class="product-quantity">Số Lượng</th>
+                                    <th class="product-total">Tổng Tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model)
+                                {
+                                    <tr class="table-body-row" data-product-id="1">
+                                        <td class="product-remove">
+                                            <a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-pId="@item.Product.ProductId">
+                                                <i class="far fa-window-close"></i>
+                                            </a>
+                                        </td>
+                                        <td class="product-image"><img src="@item.Product.ImageUrl" alt=""></td>
+                                        <td class="product-name">@item.Product.ProductName</td>
+                                        <td class="product-price">@item.Product.Price</td>
+                                        <td class="product-quantity">
+                                            @item.Product.Quantity
+                                        </td>
+                                        <td class="product-total">@(item.Qty * item.Product.Price)</td>
+                                    </tr>
+                                }
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="total-section">
+                        <table class="total-table">
+                            <thead class="total-table-head">
+                                <tr class="table-total-row">
+                                    <th>Tất cả</th>
+                                    <th>Giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="total-data">
+                                    <td><strong>Tổng: </strong></td>
+                                    <td id="total-amount">@Model.Sum(item => item.Qty * item.Product.Price).ToString()</td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Phí vận chuyển: </strong></td>
+                                    <td>30</td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Thành tiền: </strong></td>
+                                    <td id="final-total">@Model.Sum(item => item.Qty * item.Product.Price - 30).ToString()</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="cart-buttons">
+                            <a asp-controller="Order" asp-action="Checkout" class="boxed-btn black" id="checkout-btn">Check Out</a>
+                        </div>
+                        <div class="coupon-section">
+                            <h3>Áp dụng mã giảm giá</h3>
+                            <div class="coupon-form-wrap">
+                                <form id="coupon-form">
+                                    <p><input type="text" id="coupon-code" placeholder="Mã"></p>
+                                    <p><button type="button" id="apply-coupon-btn">Apply</button></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div style="margin-bottom: 100px;" class="container">
+        <br><br><br><br>
+        <div class="text-center">
+            <img src="https://www.svgrepo.com/show/17356/empty-cart.svg" class="img-fluid"
+                 style="width: 200px; height: 200px; margin-left: auto; margin-right: auto" alt="...">
+            <br>
+            <h1><strong>Your cart is empty</strong></h1>
+            <br>
+            <p>
+                Before proceed to checkout you must add some products to your shopping cart. You will find a lot of
+                interesting products on our "Shop" page.
+            </p>
+            <a style="background-color:#DEAD6F;color:#fff;border:none;" asp-controller="Product" asp-action="Shop" class="btn btn-primary w-20">
+                Start Shopping
+            </a>
+        </div>
+    </div>
+}
+

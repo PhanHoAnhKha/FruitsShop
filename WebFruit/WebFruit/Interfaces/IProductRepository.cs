@@ -15,14 +15,13 @@ namespace WebFruit.Interfaces
         Task<bool> DeleteCategoryAsync(int id);
 
         //Products
-        Task<List<Product>> GetAllProductsAsync(string? filterOn = null, string? filterQuery = null,
-            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 100);
+        Task<List<Product>> GetAllProductsAsync();
         Task<Product> GetProductAsync(int id);
         Task<bool> AddProductAsync(ProductDTO productDTO);
 
         Task<bool> UpdateProductAsync(int id, ProductDTO productDTO);
 
         Task<bool> DeleteProductAsync(int id);
-
+        Task<bool> AddEmailSubscription(EmailSubscribeDTO email);
     }
 }

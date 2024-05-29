@@ -229,6 +229,9 @@ namespace WebFruit.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsSaling")
+                        .HasColumnType("bit");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 

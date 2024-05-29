@@ -73,11 +73,10 @@ namespace WebFruit.Controllers
 
         #region Product Endpoints
         [HttpGet("Get-All-Product")]
-        public async Task<IActionResult> GetAllProducts(string? filterOn = null, string? filterQuery = null,
-            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 100)
+        public async Task<IActionResult> GetAllProducts()
         {
             _logger.LogInformation("GetAll Product Action method was invoked");
-            var products = await _productRepository.GetAllProductsAsync(filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
+            var products = await _productRepository.GetAllProductsAsync();
             if (products == null || !products.Any())
             {
                 return StatusCode(StatusCodes.Status204NoContent, "No products found matching the criteria.");
@@ -132,6 +131,20 @@ namespace WebFruit.Controllers
             }
 
             return StatusCode(StatusCodes.Status200OK, "Product deleted successfully");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EmailSubscribe(EmailSubscribeDTO emailDto)
+        {
+            var result = await _productRepository.AddEmailSubscription(emailDto);
+
+            if (result)
+            {
+                return StatusCode(StatusCodes.Status200OK, "Email subscription added successfully");
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add email subscription.");
+            }
         }
         #endregion Product Endpoints
     }

@@ -79,41 +79,9 @@ namespace WebFruit.Services
         #endregion Category
 
         #region  Product
-        public async Task<List<Product>> GetAllProductsAsync(string? filterOn = null, string? filterQuery = null,
-            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 100)
+        public async Task<List<Product>> GetAllProductsAsync()
         {
-            try
-            {
-                var query = _context.Products.AsQueryable();
-
-                // Filtering
-                if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
-                {
-                    if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
-                    {
-                        query = query.Where(x => x.ProductName.Contains(filterQuery));
-                    }
-                }
-
-                // Sorting
-                if (!string.IsNullOrWhiteSpace(sortBy))
-                {
-                    if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
-                    {
-                        query = isAscending ? query.OrderBy(x => x.ProductName) : query.OrderByDescending(x => x.ProductName);
-                    }
-                }
-
-                // Pagination
-                var skipResults = (pageNumber - 1) * pageSize;
-                var paginatedResults = await query.Skip(skipResults).Take(pageSize).ToListAsync();
-
-                return paginatedResults;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return await _context.Products.ToListAsync();
         }
         public async Task<Product> GetProductAsync(int id)
         {
@@ -129,7 +97,8 @@ namespace WebFruit.Services
                 ImageUrl = productDto.ImageUrl,
                 Quantity = productDto.Quantity,
                 Price = productDto.Price,
-                CategoryId = productDto.CategoryId
+                CategoryId = productDto.CategoryId,
+                IsSaling = productDto.IsSaling
             };
 
             await _context.Products.AddAsync(product);
@@ -148,6 +117,7 @@ namespace WebFruit.Services
             product.Quantity = productDto.Quantity;
             product.Price = productDto.Price;
             product.CategoryId = productDto.CategoryId;
+            product.IsSaling = productDto.IsSaling;
 
             _context.Products.Update(product);
             return await _context.SaveChangesAsync() > 0;
@@ -161,6 +131,30 @@ namespace WebFruit.Services
 
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> AddEmailSubscription(EmailSubscribeDTO emailDto)
+        {
+            try
+            {
+                var existingEmail = await _context.EmailSubscriptions.FirstOrDefaultAsync(e => e.Email == emailDto.Email);
+                if (existingEmail != null)
+                {
+                    return true;
+                }
+
+                var newEmail = new EmailSubscriptions
+                {
+                    Email = emailDto.Email
+                };
+                _context.EmailSubscriptions.Add(newEmail);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         #endregion Product
     }

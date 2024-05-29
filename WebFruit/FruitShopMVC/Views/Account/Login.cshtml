@@ -1,0 +1,53 @@
+﻿@model FruitShopMVC.DTOs.LoginRequestDTO
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Trái cây tươi và Hữu cơ</p>
+                    <h1>Đăng Nhập</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+<div id="boo">
+
+
+    <div class="col-lg-4">
+        <div class="contact-form-wrap">
+            <div class="contact-form-box">
+                <h4><i class="fas fa-map"></i> Shop Address</h4>
+                <p>74/13 Phù Đổng Thiên Vương. <br> Thành Phố Đà Lạt</p>
+            </div>
+            <div class="contact-form-box">
+                <h4><i class="far fa-clock"></i> Shop Hours</h4>
+                <p>MON - FRIDAY: 7 to 10 PM <br> SAT - SUN: 10 to 8 PM </p>
+            </div>
+            <div class="contact-form-box">
+                <h4><i class="fas fa-address-book"></i> Contact</h4>
+                <p>Phone: +033 7928 700 <br> Email: anhkha204@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Form Đăng Nhập -->
+    <div id="form-dangki">
+        <h3>Login</h3>
+        <form asp-action="Login" method="post">
+            <label for="username">Tên đăng nhập</label>
+            <input asp-for="Username" type="text" id="username" name="username" required>
+            <span asp-validation-for="Username" class="text-danger"></span>
+
+            <label for="password">Mật khẩu</label>
+            <input asp-for="Password" type="password" id="password" name="password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <br>
+</div>

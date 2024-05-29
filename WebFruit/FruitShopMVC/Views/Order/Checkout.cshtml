@@ -1,0 +1,59 @@
+﻿@model Orders
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Tươi và Hữu cơ</p>
+					<h1>Check Out Product</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+<!-- check out section -->
+<div class="checkout-section mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="checkout-accordion-wrap">
+					<div class="accordion" id="accordionExample">
+						<div class="card single-accordion">
+							<div class="card-header" id="headingOne">
+								<h5 class="mb-0">
+									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										Địa chỉ thanh toán
+									</button>
+								</h5>
+							</div>
+							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+								<div class="card-body">
+									<div class="billing-address-form">
+										<form asp-controller="Order" asp-action="Checkout" method="post" id="billingForm" action="index.html">
+											<p><input asp-for="FirstName" type="text" placeholder="First Name" required></p>
+											<p><input asp-for="LastName" type="text" placeholder="Last Name" required></p>
+											<p><input asp-for="Email" type="email" placeholder="Email" required></p>
+											<p><input asp-for="Address" type="text" placeholder="Address" required></p>
+											<p><input asp-for="Phone" type="tel" placeholder="Phone" required></p>
+											<p><textarea name="bill" id="bill" cols="30" rows="10" placeholder="Say Something" required></textarea></p>
+											<div class="back-buttons">
+												<a asp-controller="ShoppingCart" asp-action="Index" class="boxed-btn black">Quay Lại</a>
+											</div>
+											<div class="cart-buttons">
+												<button type="submit"><a class="boxed-btn black" id="checkoutButton">Thanh Toán</a></button>
+											</div>
+		
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
