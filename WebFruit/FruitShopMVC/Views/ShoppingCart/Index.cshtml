@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr class="total-data">
                                     <td><strong>Thành tiền: </strong></td>
-                                    <td id="final-total">@Model.Sum(item => item.Qty * item.Product.Price - 30).ToString()</td>
+                                    <td id="final-total">@Model.Sum(item => item.Qty * item.Product.Price + 30).ToString()</td>
                                 </tr>
                             </tbody>
                         </table>

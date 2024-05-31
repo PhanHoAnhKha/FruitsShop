@@ -22,9 +22,9 @@
 				{
 					<div class="col-lg-4 col-md-6">
 						<div class="single-latest-news">
-							<div class="latest-news-bg news-bg-1"></div>
+							<a asp-controller="New" asp-action="Details" asp-route-id="@item.NewId"><img src="@item.ImageUrl" /></a>
 							<div class="news-text-box">
-								<h3>@item.Title</h3>
+								<h3><a asp-controller="New" asp-action="Details" asp-route-id="@item.NewId">@item.Title</a></h3>
 								<p class="blog-meta">
 									<span class="author"><i class="fas fa-user"></i> @item.Author</span>
 									<span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate</span>
