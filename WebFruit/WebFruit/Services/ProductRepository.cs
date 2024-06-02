@@ -156,6 +156,71 @@ namespace WebFruit.Services
                 return false;
             }
         }
+
+        public IEnumerable<Product> SearchProductsByName(string productName)
+        {
+            return _context.Products.Where(p => EF.Functions.Like(p.ProductName, $"%{productName}%")).ToList();
+        }
         #endregion Product
-    }
+
+        #region Recommend
+        public async Task<List<SearchHistory>> GetSearchHistoryByUserIdAsync(int userId)
+        {
+            return await _context.SearchHistories.Where(sh => sh.UserId == userId).ToListAsync();
+        }
+
+        public async Task<List<PurchaseHistory>> GetPurchaseHistoryByUserIdAsync(int userId)
+        {
+            return await _context.PurchaseHistories.Where(ph => ph.UserId == userId).ToListAsync();
+        }
+
+		public async Task<List<Product>> GetRecommendedProductsAsync(int userId)
+		{
+			try
+			{
+				var searchHistory = await GetSearchHistoryByUserIdAsync(userId);
+
+				var recommendedProducts = new List<Product>();
+				foreach (var term in searchHistory.Select(sh => sh.SearchTerm).Distinct())
+				{
+					var productsRelatedToTerm = _context.Products
+						.Where(p => p.ProductName.Contains(term))
+						.ToList();
+
+					recommendedProducts.AddRange(productsRelatedToTerm);
+				}
+
+				return recommendedProducts;
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+		public async Task<bool> AddSearchHistory(int userId, string searchTerm)
+		{
+			try
+			{
+				var searchHistory = new SearchHistory
+				{
+					UserId = userId,
+					SearchTerm = searchTerm,
+				};
+
+				_context.SearchHistories.Add(searchHistory);
+
+				await _context.SaveChangesAsync();
+
+
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		#endregion Recommend
+	}
 }

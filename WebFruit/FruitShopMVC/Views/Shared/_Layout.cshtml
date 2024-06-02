@@ -62,10 +62,24 @@
                                 <li><a asp-controller="New" asp-action="Index">News</a></li>
                                 <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
                                 <li><a asp-controller="Product" asp-action="Shop">Shop</a></li>
+                                <li><a asp-controller="Recommend" asp-action="Index">Recommend</a></li>
 							
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        <a class="shopping-cart" asp-controller="ShoppingCart" asp-action="Index">
+                                            <i class="fas fa-shopping-cart">
+                                                <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                                    @if (ViewBag.TotalCart != null)
+                                                    {
+                                                        <text>@ViewBag.TotalCart</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>0</text>
+                                                    }
+                                                </span>
+                                            </i>
+                                        </a>
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 										<div class="user-icon dropdown" id="user-icon"><i class="fas fa-user" style="color: #eef1f6;"></i>
 											<div class="dropdown-content">

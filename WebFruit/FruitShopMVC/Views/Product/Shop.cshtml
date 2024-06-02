@@ -7,6 +7,11 @@
 				<div class="breadcrumb-text">
 					<p>Trái cây tươi và Hữu cơ</p>
 					<h1>Shop</h1>
+					<br />
+					<form method="get">
+						<input style="border:solid 0.5px type="text" name="searchTerm" placeholder="Search Product" />
+						<button type="submit" style="background-color :black;border:none;color:#fff">Search</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -28,9 +33,9 @@
 						<div class="product-image">
 							<a asp-controller="Product" asp-action="Detail" asp-route-id="@item.ProductId"><img src="@item.ImageUrl" alt=""></a>
 						</div>
-						<h3>Dâu</h3>
+						<h3>@item.ProductName</h3>
 						<p class="product-price"><span>Mỗi Kg</span> @item.Price </p>
-						<form action="index.html">
+						<form >
 							<input type="number" placeholder="1">
 						</form>
 						<a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-pId="@item.ProductId" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>

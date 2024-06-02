@@ -12,12 +12,14 @@ namespace WebFruit.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
-        private ILogger<ProductController> _logger;
+        private readonly ILogger<ProductController> _logger;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
+		public ProductController(IProductRepository productRepository, ILogger<ProductController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _productRepository = productRepository;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         #region Category Endpoints
@@ -146,6 +148,45 @@ namespace WebFruit.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add email subscription.");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> SearchProductsByNameAsync(string productName)
+        {
+			var userId = _httpContextAccessor.HttpContext.Session.GetInt32("UserId");
+			if (userId == null)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, "User ID not found in session.");
+			}
+
+			bool searchHistoryAdded = await _productRepository.AddSearchHistory(userId.Value, productName);
+
+			if (!searchHistoryAdded)
+			{
+				_logger.LogError("Failed to add search history for user with ID: {userId}, search term: {productName}", userId, productName);
+				return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add search history.");
+			}
+
+			var products = _productRepository.SearchProductsByName(productName);
+
+			if (products == null || !products.Any())
+			{
+				return StatusCode(StatusCodes.Status204NoContent, $"No products found with name: {productName}");
+			}
+
+			return StatusCode(StatusCodes.Status200OK, products);
+		}
         #endregion Product Endpoints
+
+        [HttpGet("Get-Recommended-Products/{userId}")]
+        public async Task<IActionResult> GetRecommendedProducts(int userId)
+        {
+            var recommendedProducts = await _productRepository.GetRecommendedProductsAsync(userId);
+            if (recommendedProducts == null || !recommendedProducts.Any())
+            {
+                return StatusCode(StatusCodes.Status204NoContent, "No recommended products found.");
+            }
+
+            return Ok(recommendedProducts);
+        }
+
     }
 }

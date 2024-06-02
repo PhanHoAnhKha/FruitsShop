@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using FruitShopMVC.DTOs;
+using Microsoft.AspNetCore.Identity;
+using FruitShopMVC.Models;
 
 namespace FruitShopMVC.Controllers
 {
@@ -12,13 +14,15 @@ namespace FruitShopMVC.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly ILogger<AccountController> _logger;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly UserManager<ApplicationUser> _userManager;
 
-		public AccountController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
+		public AccountController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
 		{
 			_httpClientFactory = httpClientFactory;
 			_configuration = configuration;
 			_logger = logger;
 			_httpContextAccessor = httpContextAccessor;
+			_userManager = userManager;
 		}
 
 		private HttpClient CreateHttpClient()
@@ -61,10 +65,10 @@ namespace FruitShopMVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginRequestDTO loginRequestDTO)
 		{
-			CreateHttpClient();
 			var client = _httpClientFactory.CreateClient();
+			client.BaseAddress = new Uri(_configuration["ApiBaseUrl"]); 
 			_logger.LogInformation("Gửi yêu cầu đăng nhập đến {url}", client.BaseAddress + "Account/Login");
-			client.BaseAddress = new Uri(_configuration["ApiBaseUrl"]);
+
 			var response = await client.PostAsJsonAsync("Account/Login", loginRequestDTO);
 			if (response.IsSuccessStatusCode)
 			{
@@ -75,6 +79,11 @@ namespace FruitShopMVC.Controllers
 				var token = handler.ReadJwtToken(loginResponse.JwtToken);
 				var username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
 				var roles = token.Claims.Where(claim => claim.Type == ClaimTypes.Role).Select(claim => claim.Value).ToList();
+				var userId = await GetUserIdByEmail(loginRequestDTO.Username);
+				if (userId != null)
+				{
+					HttpContext.Session.SetString("UserId", userId);
+				}
 
 				if (!string.IsNullOrEmpty(username))
 				{
@@ -97,6 +106,15 @@ namespace FruitShopMVC.Controllers
 		{
 			HttpContext.Session.Clear();
 			return RedirectToAction("Index", "Product");
+		}
+		private async Task<string> GetUserIdByEmail(string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+			if (user != null)
+			{
+				return user.Id;
+			}
+			return null;
 		}
 	}
 }

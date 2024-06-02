@@ -77,5 +77,29 @@ namespace WebFruit.Controllers
 
             return StatusCode(StatusCodes.Status200OK, "News deleted successfully");
         }
+
+        [HttpPost("{blogId}")]
+        public async Task<IActionResult> AddComment(int blogId, [FromBody] CommentDTO commentDTO)
+        {
+            var result = await _newRepository.AddComment(blogId, commentDTO);
+
+            if (!result)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add comment.");
+            }
+
+            return Ok("Comment added successfully");
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetNewWithComments(int id)
+        {
+            var blog = await _newRepository.GetNewWithComments(id);
+            if (blog == null)
+            {
+                return NoContent();
+            }
+            return Ok(blog);
+        }
     }
 }

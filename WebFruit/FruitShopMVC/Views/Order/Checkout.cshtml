@@ -30,18 +30,18 @@
 							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 								<div class="card-body">
 									<div class="billing-address-form">
-										<form asp-controller="Order" asp-action="Checkout" method="post" id="billingForm" action="index.html">
+										<form asp-controller="Order" asp-action="Checkout" method="post" id="billingForm" >
 											<p><input asp-for="FirstName" type="text" placeholder="First Name" required></p>
 											<p><input asp-for="LastName" type="text" placeholder="Last Name" required></p>
 											<p><input asp-for="Email" type="email" placeholder="Email" required></p>
 											<p><input asp-for="Address" type="text" placeholder="Address" required></p>
 											<p><input asp-for="Phone" type="tel" placeholder="Phone" required></p>
-											<p><textarea name="bill" id="bill" cols="30" rows="10" placeholder="Say Something" required></textarea></p>
+											
 											<div class="back-buttons">
 												<a asp-controller="ShoppingCart" asp-action="Index" class="boxed-btn black">Quay Lại</a>
 											</div>
-											<div class="cart-buttons">
-												<button type="submit"><a class="boxed-btn black" id="checkoutButton">Thanh Toán</a></button>
+											<div class="cart-buttons" >
+												<button style="border:none" type="submit"><a class="boxed-btn black" id="checkoutButton">Thanh Toán</a></button>
 											</div>
 		
 										</form>

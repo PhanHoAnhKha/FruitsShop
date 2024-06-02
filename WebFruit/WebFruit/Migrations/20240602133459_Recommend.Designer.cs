@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebFruit.Data;
 
@@ -11,9 +12,11 @@ using WebFruit.Data;
 namespace WebFruit.Migrations
 {
     [DbContext(typeof(FruitDbContext))]
-    partial class FruitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240602133459_Recommend")]
+    partial class Recommend
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

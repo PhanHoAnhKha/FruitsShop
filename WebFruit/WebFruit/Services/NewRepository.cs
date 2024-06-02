@@ -104,5 +104,42 @@ namespace WebFruit.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddComment(int blogId, CommentDTO commentDTO)
+        {
+            try
+            {
+                var blog = await _context.News.FindAsync(blogId);
+                if (blog == null)
+                {
+                    return false;
+                }
+
+                var comment = new Comment
+                {
+                    NewId = blogId,
+                    Name = commentDTO.UserName,
+                    Message = commentDTO.Message,
+                    Email = commentDTO.Email,
+                    Created = DateTime.UtcNow,
+                };
+
+                _context.Comments.Add(comment);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<New> GetNewWithComments(int id)
+        {
+            return await _context.News
+                .Include(b => b.Comments)
+                .FirstOrDefaultAsync(b => b.NewId == id);
+        }
     }
 }

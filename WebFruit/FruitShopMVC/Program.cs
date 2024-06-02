@@ -1,6 +1,10 @@
 using FruitShopMVC.Data;
+using FruitShopMVC.Models;
+using FruitShopMVC.Models.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -14,6 +18,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging();
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<RecommendationService>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -36,7 +41,14 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddDbContext<FruitDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("FruitDbConnection")));
+builder.Services.AddDbContext<PetAuthDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("PetAuthDbConnection")));
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+	.AddEntityFrameworkStores<PetAuthDbContext>()
+	.AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<ApplicationUser>>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

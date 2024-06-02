@@ -54,19 +54,28 @@ namespace FruitShopMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Shop()
+        public async Task<IActionResult> Shop(string searchTerm)
         {
             List<Products> products = new List<Products>();
             HttpResponseMessage response = await _httpClient.GetAsync($"Product/GetAllProducts/Get-All-Product");
 
 
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                response = await _httpClient.GetAsync($"Product/GetAllProducts/Get-All-Product");
+            }
+            else
+            {
+                response = await _httpClient.GetAsync($"Product/SearchProductsByName?productName={searchTerm}");
+            }
+
             if (response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
-
                 products = JsonConvert.DeserializeObject<List<Products>>(data);
             }
 
+            ViewBag.SearchTerm = searchTerm;
             return View(products);
         }
 
