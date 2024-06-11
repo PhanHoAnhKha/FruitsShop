@@ -10,5 +10,6 @@ namespace WebFruit.Interfaces
         IEnumerable<Order> GetCompletedOrders(string userId);
         public Order GetOrderById(int orderId);
         public void DeleteOrder(int orderId);
+        IEnumerable<OrderDetail> GetAllOrderDetail();
     }
 }

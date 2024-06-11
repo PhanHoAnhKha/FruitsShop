@@ -1,5 +1,6 @@
 ﻿@model FruitShopMVC.ViewModels.HomeVM
 
+
 <!-- hero area -->
 <div class="hero-area hero-bg">
 	<div class="container">
@@ -62,6 +63,8 @@
 
 	</div>
 </div>
+
+
 <!-- end features list section -->
 <!-- product section -->
 <div class="product-section mt-150 mb-150">
@@ -74,7 +77,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 
 		<div class="row">
 			@foreach(var item in Model.Products)
@@ -176,7 +179,7 @@
 <!-- shop banner -->
 <section class="shop-banner">
 	<div class="container">
-		<h3>Chương trình <span class="orange-text">giảm giá!</span>  <br> lớn trong tháng 5.</span></h3>
+		<h3>Chương trình <span class="orange-text">giảm giá!</span>  <br> lớn trong tháng 6.</span></h3>
 		<div class="sale-percent"><span>Giảm! <br>Đến</span>50% <span>!</span></div>
 		<a asp-controller="Product" asp-action="Shop" class="cart-btn btn-lg">Shop Now</a>
 	</div>
@@ -208,7 +211,7 @@
 								<h3><a asp-controller="New" asp-action="Details" asp-route-id="@item.NewId">@item.Title</a></h3>
 								<p class="blog-meta">
 									<span class="author"><i class="fas fa-user"></i> @item.Author</span>
-									<span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate</span>
+									<span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate.ToShortDateString()</span>
 								</p>
 								<p class="excerpt">@item.Content</p>
 
@@ -230,3 +233,4 @@
 </div>
 
 <!-- end latest news -->
+

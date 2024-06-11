@@ -66,5 +66,9 @@ namespace WebFruit.Services
                 dbContext.SaveChanges();
             }
         }
+        public IEnumerable<OrderDetail> GetAllOrderDetail()
+        {
+            return dbContext.OrderDetails.ToList();
+        }
     }
 }

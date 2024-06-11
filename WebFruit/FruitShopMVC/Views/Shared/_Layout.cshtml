@@ -1,9 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var cartCount = HttpContextAccessor?.HttpContext?.Session.GetInt32("CartCount") ?? 0;
+}﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["FruitShop"] - FruitShopMVC</title>
+    <title>@ViewData["FruitShop"]FruitShopMVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- logo web -->
@@ -29,104 +33,101 @@
     <link rel="stylesheet" href="~/assets/css/responsive.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FruitShopMVC.styles.css" asp-append-version="true" />
+    
 </head>
 <body>
-    <!--PreLoader-->
-    <!--<div class="loader">
-           <div class="loader-inner">
-               <div class="circle"></div>
-           </div>
-       </div>-->
-    <!--PreLoader Ends-->
-	
-	<!-- header -->
-	<div class="top-header-area" id="sticker">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-sm-12 text-center">
-					<div class="main-menu-wrap">
-						<!-- logo -->
-						<div class="site-logo">
-							<a asp-controller="Product" asp-action="Index">
-								<img width="70px" src="~/assets/img/logo.png" alt="">
-							</a>
-						</div>
-						<!-- logo -->
+    <header>
+        <div class="top-header-area" id="sticker">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 text-center">
+                        <div class="main-menu-wrap">
+                            <!-- logo -->
+                            <div class="site-logo">
+                                <a asp-controller="Product" asp-action="Index">
+                                    <img width="70px" src="~/assets/img/logo.png" alt="">
+                                </a>
+                            </div>
+                            <!-- logo -->
+                            <!-- menu start -->
+                            <nav class="main-menu">
+                                <ul>
+                                    <li class="current-list-item"></li>
+                                    <li><a asp-controller="Product" asp-action="Index">Home</a></li>
+                                    <li><a asp-controller="AboutUs" asp-action="Index">About</a></li>
+                                    <li><a asp-controller="New" asp-action="Index">News</a></li>
+                                    <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
+                                    <li><a asp-controller="Product" asp-action="Shop">Shop</a></li>
+                                    <!--<li><a asp-controller="Recommend" asp-action="Index">Recommend</a></li>-->
 
-						<!-- menu start -->
-						<nav class="main-menu">
-							<ul>
-								<li class="current-list-item"></li>
-								<li><a asp-controller="Product" asp-action="Index">Home</a></li>
-                                <li><a asp-controller="AboutUs" asp-action="Index">About</a></li>
-                                <li><a asp-controller="New" asp-action="Index">News</a></li>
-                                <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
-                                <li><a asp-controller="Product" asp-action="Shop">Shop</a></li>
-                                <li><a asp-controller="Recommend" asp-action="Index">Recommend</a></li>
-							
-								<li>
-									<div class="header-icons">
-                                        <a class="shopping-cart" asp-controller="ShoppingCart" asp-action="Index">
-                                            <i class="fas fa-shopping-cart">
-                                                <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
-                                                    @if (ViewBag.TotalCart != null)
+                                    <li>
+                                        <div class="header-icons">
+                                            <a class="shopping-cart" asp-controller="ShoppingCart" asp-action="Index">
+                                                <i class="fas fa-shopping-cart">
+                                                    <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                                        @cartCount
+                                                    </span>
+                                                </i>
+                                            </a>
+                                            
+                                            <div class="user-icon dropdown" id="user-icon">
+                                                <i class="fas fa-user" style="color: #eef1f6;"></i>
+                                                <div class="dropdown-content">
+                                                    @if (Context.Session.GetString("Username") != null)
                                                     {
-                                                        <text>@ViewBag.TotalCart</text>
+                                                        <span> <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout (@Context.Session.GetString("Username"))</a></span>
                                                     }
                                                     else
                                                     {
-                                                        <text>0</text>
+                                                        <span><a asp-controller="Account" asp-action="Login">Đăng nhập</a></span>
+                                                        <span><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></span>
                                                     }
-                                                </span>
-                                            </i>
-                                        </a>
-										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-										<div class="user-icon dropdown" id="user-icon"><i class="fas fa-user" style="color: #eef1f6;"></i>
-											<div class="dropdown-content">
-                                                @if (Context.Session.GetString("Username") != null)
-                                                {
-                                                    <span> <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout (@Context.Session.GetString("Username"))</a></span>
-                                                }
-                                                else
-                                                {
-                                                    <span><a asp-controller="Account" asp-action="Login">Đăng nhập</a></span>
-                                                    <span><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></span>
-                                                }
+                                                </div>
                                             </div>
-										  </div>	
-									</div>																		
-								</li>
-							</ul>
-						</nav>
-						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-						<div class="mobile-menu"></div>
-						<!-- menu end -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end header -->
-	
-	<!-- search area -->
-	<div class="search-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<span class="close-btn"><i class="fas fa-window-close"></i></span>
-					<div class="search-bar">
-						<div class="search-bar-tablecell">
-							<h3>Search For:</h3>
-							<input type="text" placeholder="Keywords">
-							<button type="submit">Search <i class="fas fa-search"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end search area -->
-
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                            <div class="mobile-menu"></div>
+                            <!-- menu end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end header -->
+        <!-- search area -->
+        <div class="search-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                        <div class="search-bar">
+                            <div class="search-bar-tablecell">
+                                <h3>Search For:</h3>
+                                <input type="text" placeholder="Keywords">
+                                <button type="submit">Search <i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end search area -->
+    </header>
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "Bjs9VHXzDnX4lI043TImR",
+            domain: "www.chatbase.co"
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js"
+            chatbotId="Bjs9VHXzDnX4lI043TImR"
+            domain="www.chatbase.co"
+            defer>
+    </script>
+   
     @RenderBody()
 
     <!-- footer -->

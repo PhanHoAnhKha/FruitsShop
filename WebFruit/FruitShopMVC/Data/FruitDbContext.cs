@@ -16,6 +16,12 @@ namespace FruitShopMVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OrderDetails>()
+         .HasOne(od => od.Order)
+         .WithMany(o => o.OrderDetails)
+         .HasForeignKey(od => od.OrderId)
+         .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<OrderDetails>().HasKey(o => o.OrderDetailId);
 
             modelBuilder.Entity<ProductDTO>()

@@ -25,10 +25,7 @@ namespace WebFruit.Interfaces
         Task<bool> AddEmailSubscription(EmailSubscribeDTO email);
         IEnumerable<Product> SearchProductsByName(string productName);
 
-        Task<List<SearchHistory>> GetSearchHistoryByUserIdAsync(int userId);
-        Task<List<PurchaseHistory>> GetPurchaseHistoryByUserIdAsync(int userId);
-        Task<List<Product>> GetRecommendedProductsAsync(int userId);
-		Task<bool> AddSearchHistory(int userId, string searchTerm);
+     
 
 
 	}

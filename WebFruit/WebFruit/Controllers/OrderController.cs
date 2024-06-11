@@ -7,7 +7,7 @@ namespace WebFruit.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [Authorize]
+
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
@@ -83,6 +83,20 @@ namespace WebFruit.Controllers
             {
                 _orderRepository.DeleteOrder(orderId);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetAllOrderDetail()
+        {
+            try
+            {
+                var orderdetail = _orderRepository.GetAllOrderDetail();
+                return Ok(orderdetail);
             }
             catch (Exception ex)
             {

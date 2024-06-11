@@ -302,56 +302,6 @@ function applyCouponDiscount(code) {
 
 
 
-// Hiện thông báo thêm sản phẩm thành công //
-document.addEventListener('DOMContentLoaded', function() {
-    // Lấy tất cả các nút "Add to Cart"
-    var cartButtons = document.querySelectorAll('.cart-btn');
-    
-    // Lặp qua từng nút và thêm sự kiện click
-    cartButtons.forEach(function(button) {
-      button.addEventListener('click', function(event) {
-        event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-        
-        // Tạo thông báo
-        var notification = document.createElement('div');
-        notification.innerText = 'Thêm hàng thành công !';
-        notification.style.position = 'fixed';
-        notification.style.top = '20px'; // Đặt vị trí ở phía trên
-        notification.style.right = '20px';
-        notification.style.background = 'green';
-        notification.style.color = 'white';
-        notification.style.padding = '10px';
-        notification.style.borderRadius = '5px';
-        notification.style.zIndex = '1000';
-        
-        // Thêm thông báo vào trang
-        document.body.appendChild(notification);
-        
-        // Xóa thông báo sau 2 giây
-        setTimeout(function() {
-          notification.remove();
-        }, 2000);
-      });
-    });
-  });
-  // Hiện thông báo thêm sản phẩm thành công //
-  
-
-
-// Yêu cầu điền thông tin đầy đủ //
-document.getElementById("checkoutButton").addEventListener("click", function(event){
-	event.preventDefault();
-	var form = document.getElementById("billingForm");
-	if (form.checkValidity()) {
-		// Form is valid, submit the form
-		form.submit();
-	} else {
-		// Form is not valid, display an alert or some message
-		alert("Vui lòng điền đầy đủ thông tin địa chỉ thanh toán.");
-		form.reportValidity();
-	}
-});
-// Yêu cầu điền thông tin đầy đủ //
 
 
 

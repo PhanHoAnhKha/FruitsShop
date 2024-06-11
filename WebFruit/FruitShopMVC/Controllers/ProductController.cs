@@ -76,7 +76,11 @@ namespace FruitShopMVC.Controllers
             }
 
             ViewBag.SearchTerm = searchTerm;
-            return View(products);
+			if (products == null || !products.Any())
+			{
+				return RedirectToAction("Shop");
+			}
+			return View(products);
         }
 
         [HttpGet]
@@ -134,5 +138,25 @@ namespace FruitShopMVC.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Đã xảy ra lỗi trong quá trình xử lý yêu cầu của bạn.");
             }
         }
-    }
+
+		[HttpGet]
+		public async Task<JsonResult> GetProductSuggestions(string term)
+		{
+			if (string.IsNullOrWhiteSpace(term))
+			{
+				return Json(new List<string>());
+			}
+
+			var response = await _httpClient.GetAsync($"Products/GetProductSuggestions?term={term}");
+
+			if (response.IsSuccessStatusCode)
+			{
+				var data = await response.Content.ReadAsStringAsync();
+				var suggestions = JsonConvert.DeserializeObject<List<string>>(data);
+				return Json(suggestions);
+			}
+
+			return Json(new List<string>());
+		}
+	}
 }

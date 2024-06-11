@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebFruit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fa14bd2133f80dc5b9cb45eeb4d946e4d354a40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fe34067fdf11cff45052f082176435799456335")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebFruit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebFruit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

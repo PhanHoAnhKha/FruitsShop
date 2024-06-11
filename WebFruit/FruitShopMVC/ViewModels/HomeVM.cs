@@ -16,4 +16,12 @@ namespace FruitShopMVC.ViewModels
         public IEnumerable<News> News { get; set; }
         public News New { set; get; }
     }
+    public class ContactSubscriberViewModel
+    {
+        public int TotalRevenue { get; set; }
+        public int TotalUsers { get; set; }
+        public List<Contacts> Contacts { get; set; }
+        public List<EmailSubscriptions> Subscribers { get; set; }
+        public int TotalQuantityInOrderDetails { get; set; }
+    }
 }

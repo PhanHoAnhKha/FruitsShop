@@ -1,0 +1,99 @@
+﻿@model IEnumerable<FruitShopMVC.Models.Orders>
+
+@{
+    ViewData["Title"] = "GetAllOrders";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>All Orders</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.OrderId)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        @Html.DisplayNameFor(model => model.FirstName)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.LastName)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.Phone)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.Address)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.OrderTotal)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.OrderPlaced)
+                                    </th>
+
+                                    <th></th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                @Html.DisplayFor(modelItem => item.OrderId)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.FirstName)
+                                            </p>
+
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.LastName)
+                                            </p>
+                                        </td>
+
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.Phone)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.OrderTotal)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.OrderPlaced)
+                                        </td>
+                                        <td>
+                                            <button style="background-color:dodgerblue;border:none;color:white;border-radius:10%">@Html.ActionLink("Delete", "DeleteOrder", new { id = item.OrderId }, new { @style = "color: white;" })</button>
+                                        </td>
+                                    </tr>
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

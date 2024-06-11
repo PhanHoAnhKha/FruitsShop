@@ -14,15 +14,14 @@ namespace FruitShopMVC.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly ILogger<AccountController> _logger;
 		private readonly IHttpContextAccessor _httpContextAccessor;
-		private readonly UserManager<ApplicationUser> _userManager;
 
-		public AccountController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+
+		public AccountController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
 		{
 			_httpClientFactory = httpClientFactory;
 			_configuration = configuration;
 			_logger = logger;
 			_httpContextAccessor = httpContextAccessor;
-			_userManager = userManager;
 		}
 
 		private HttpClient CreateHttpClient()
@@ -79,11 +78,7 @@ namespace FruitShopMVC.Controllers
 				var token = handler.ReadJwtToken(loginResponse.JwtToken);
 				var username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
 				var roles = token.Claims.Where(claim => claim.Type == ClaimTypes.Role).Select(claim => claim.Value).ToList();
-				var userId = await GetUserIdByEmail(loginRequestDTO.Username);
-				if (userId != null)
-				{
-					HttpContext.Session.SetString("UserId", userId);
-				}
+
 
 				if (!string.IsNullOrEmpty(username))
 				{
@@ -107,14 +102,6 @@ namespace FruitShopMVC.Controllers
 			HttpContext.Session.Clear();
 			return RedirectToAction("Index", "Product");
 		}
-		private async Task<string> GetUserIdByEmail(string email)
-		{
-			var user = await _userManager.FindByEmailAsync(email);
-			if (user != null)
-			{
-				return user.Id;
-			}
-			return null;
-		}
+		
 	}
 }

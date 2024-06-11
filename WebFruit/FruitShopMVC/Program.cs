@@ -44,11 +44,9 @@ builder.Services.AddDbContext<FruitDbContext>(options =>
 builder.Services.AddDbContext<PetAuthDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("PetAuthDbConnection")));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-	.AddEntityFrameworkStores<PetAuthDbContext>()
-	.AddDefaultTokenProviders();
-
-builder.Services.AddScoped<UserManager<ApplicationUser>>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+              .AddEntityFrameworkStores<PetAuthDbContext>()
+              .AddDefaultTokenProviders();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
