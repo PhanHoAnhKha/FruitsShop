@@ -50,12 +50,13 @@ namespace FruitShopMVC.Controllers
             {
                 string data = await response.Content.ReadAsStringAsync();
                 News news = JsonConvert.DeserializeObject<News>(data);
-                return View(news);
+                if (news != null)
+                {
+                    return View(news);
+                }
             }
-            else
-            {
+           
                 return NotFound();
-            }
         }
 
         [Authorize]
@@ -141,22 +142,22 @@ namespace FruitShopMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(int blogId, Comments comment)
+        public async Task<IActionResult> AddComment(int newId, CommentDTO comment)
         {
             SetAuthorizationHeader();
-
-            var content = new StringContent(JsonConvert.SerializeObject(comment), Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PostAsync($"Blog/AddComment/{blogId}", content);
+			comment.Created = DateTime.Now;
+			var content = new StringContent(JsonConvert.SerializeObject(comment), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _httpClient.PostAsync($"New/AddComment/{newId}", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Details", new { id = blogId });
+                return RedirectToAction("Details", new { id = newId });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Không thể thêm bình luận. Vui lòng thử lại sau.");
-                return View(comment);
-            }
+				return RedirectToAction("Details", new { id = newId });
+			}
         }
     }
 }

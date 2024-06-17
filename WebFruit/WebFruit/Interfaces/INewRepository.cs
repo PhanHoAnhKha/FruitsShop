@@ -10,7 +10,7 @@ namespace WebFruit.Interfaces
         Task<bool> AddNewsAsync(NewDTO newsDto);
         Task<bool> UpdateNewsAsync(int id, NewDTO newsDto);
         Task<bool> DeleteNewsAsync(int id);
-        Task<bool> AddComment(int blogId, CommentDTO commentDTO);
+        Task<bool> AddComment(int newId, CommentDTO commentDTO);
         Task<New> GetNewWithComments(int id);
     }
 }

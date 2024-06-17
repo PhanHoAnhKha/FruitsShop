@@ -13,44 +13,50 @@
 </div>
 <!-- end breadcrumb section -->
 
-<div id="boo">
-
-
-    <div class="col-lg-4">
-        <div class="contact-form-wrap">
-            <div class="contact-form-box">
-                <h4><i class="fas fa-map"></i> Shop Address</h4>
-                <p>74/13 Phù Đổng Thiên Vương. <br> Thành Phố Đà Lạt</p>
-            </div>
-            <div class="contact-form-box">
-                <h4><i class="far fa-clock"></i> Shop Hours</h4>
-                <p>MON - FRIDAY: 7 to 10 PM <br> SAT - SUN: 10 to 8 PM </p>
-            </div>
-            <div class="contact-form-box">
-                <h4><i class="fas fa-address-book"></i> Contact</h4>
-                <p>Phone: +033 7928 700 <br> Email: anhkha204@gmail.com</p>
+<div class="container" id="boo">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="contact-form-wrap">
+                <div class="contact-form-box">
+                    <h4><i class="fas fa-map"></i> Shop Address</h4>
+                    <p>74/13 Phù Đổng Thiên Vương. <br> Thành Phố Đà Lạt</p>
+                </div>
+                <div class="contact-form-box">
+                    <h4><i class="far fa-clock"></i> Shop Hours</h4>
+                    <p>MON - FRIDAY: 7 to 10 PM <br> SAT - SUN: 10 to 8 PM </p>
+                </div>
+                <div class="contact-form-box">
+                    <h4><i class="fas fa-address-book"></i> Contact</h4>
+                    <p>Phone: +033 7928 700 <br> Email: anhkha204@gmail.com</p>
+                </div>
             </div>
         </div>
+
+        <div class="col-lg-4" id="form-dangki">
+            <h3>Register</h3>
+            <form asp-action="Register" method="post">
+
+                <label for="email">Email</label>
+                <input asp-for="Username" class="form-control" required>
+
+                <label for="password">Mật khẩu</label>
+                <input asp-for="Password" type="password" class="form-control" required>
+
+                <input asp-for="Roles" type="hidden" value="Read" required>
+
+                <input style="margin-top:10px" type="submit" value="Register" class="btn btn-primary">
+            </form>
+        </div>
     </div>
-
-
-    <div id="form-dangki">
-        <h3>Register</h3>
-        <form asp-action="Register" method="post">
-       
-            <label for="email">Email</label>
-            <input asp-for="Username"  required>
-
-
-            <label for="password">Mật khẩu</label>
-            <input asp-for="Password" type="password" required>
-
-
-            <input asp-for="Roles" type="hidden" value="Read" required>
-
-            <input type="submit" value="Register">
-        </form>
-    </div>
-
-    <br>
 </div>
+<style>
+    #boo .col-lg-4 {
+        height: 100%; 
+    }
+
+    #form-dangki {
+        margin-top: 20px;
+        margin-left:50px;
+    }
+
+</style>

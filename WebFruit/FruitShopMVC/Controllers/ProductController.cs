@@ -4,17 +4,20 @@ using System.Text;
 using FruitShopMVC.DTOs;
 using FruitShopMVC.Models;
 using FruitShopMVC.ViewModels;
+using FruitShopMVC.Services;
 
 namespace FruitShopMVC.Controllers
 {
     public class ProductController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly EmailService _emailService;
 
-        public ProductController(IHttpClientFactory httpClientFactory)
+        public ProductController(IHttpClientFactory httpClientFactory,EmailService emailService)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7163/api/");
+            _emailService = emailService;
         }
 
         private void SetAuthorizationHeader()
@@ -126,6 +129,8 @@ namespace FruitShopMVC.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     ViewBag.SuccessMessage = "Cảm ơn bạn đã đăng ký!";
+                    var welcomeMessage = "Chào mừng bạn đến với Fruit Shop! Cảm ơn bạn đã đăng ký.";
+                    await _emailService.SendEmailAsync(email, "Welcome to Fruit Shop", welcomeMessage);
                     return RedirectToAction(nameof(Index));
                 }
                 else

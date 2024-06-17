@@ -1,5 +1,142 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model FruitShopMVC.Models.News
+
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Read the Details</p>
+                    <h1>Single Article</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<!-- single article section -->
+<div class="mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="single-article-section">
+                    <div class="single-article-text">
+                        <img src="@Model?.ImageUrl" alt="Article Image" />
+                        <p class="blog-meta">
+                            <span class="author"><i class="fas fa-user"></i> @Model?.Author</span>
+                            <span class="date"><i class="fas fa-calendar"></i> @Model?.CreatedDate.ToShortDateString()</span>
+                        </p>
+                        <h2>@Model?.Title</h2>
+                        <p>@Model?.Description</p>
+
+                        <p>@Model?.ContentDetail</p>
+                    </div>
+
+                    <div class="comments-list-wrap">
+                        <h3 class="comment-count-title">@Model?.Comments?.Count Comments</h3>
+                        @if (Model?.Comments != null && Model.Comments.Any())
+                        {
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <div class="comment-list">
+                                    <div class="single-comment-body">
+                                        <div class="comment-user-avater">
+                                            <img src="~/assets/img/avaters/avartar1.png" alt="">
+                                        </div>
+                                        <div class="comment-text-body">
+                                            <h4>@comment.Name <span class="comment-date">@comment.Created</span> <a href="#">reply</a></h4>
+                                            <p>@comment.Message</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có bình luận nào.</p>
+                        }
+                    </div>
+
+                    <div class="leave-comment-section">
+                        <h3 class="mb-4">Leave a comment</h3>
+                        <form asp-action="AddComment" asp-controller="New" method="post">
+                            <div class="form-group">
+                                <label for="Name">Name *</label>
+                                <input type="text" class="form-control" id="Name" name="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email *</label>
+                                <input type="email" class="form-control" id="Email" name="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Message">Message *</label>
+                                <textarea id="Message" name="Message" cols="30" rows="5" class="form-control" required></textarea>
+                            </div>
+                            <input type="hidden" name="NewId" value="@Model?.NewId" />
+                            <div class="form-group mb-0">
+                                <input type="submit" value="Leave Comment" class="btn btn-primary px-3">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end single article section -->
+<!-- logo carousel -->
+<div class="logo-carousel-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="logo-carousel-inner">
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/1.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="~/assets/img/company-logos/2.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="~/assets/img/company-logos/3.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="~/assets/img/company-logos/4.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="~/assets/img/company-logos/5.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container of the carousel */
+    .logo-carousel-section .container {
+        display: flex;
+        justify-content: center; /* Centers the carousel in the middle of the container */
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Inner carousel wrapper */
+    .logo-carousel-inner {
+        display: flex;
+        justify-content: space-around; /* Space out the items evenly */
+        align-items: center;
+        flex-wrap: nowrap; /* Prevents items from wrapping to the next line */
+        overflow-x: auto; /* Adds horizontal scrolling if the items overflow the container */
+        width: 100%;
+    }
+
+    /* Individual logo item */
+    .single-logo-item {
+        flex: 0 0 auto; /* Prevents the items from shrinking or growing */
+        margin: 10px; /* Adds some space around each logo item */
+    }
+
+        .single-logo-item img {
+            max-width: 300px; /* Adjust the max-width as necessary */
+            height: auto;
+        }
+</style>

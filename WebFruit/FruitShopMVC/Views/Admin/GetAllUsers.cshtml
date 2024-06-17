@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FruitShopMVC.Models.UserWithRolesVM>
+
+@{
+    ViewData["Title"] = "GetAllUsers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>Users</h6>
+
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.UserId)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Roles
+                                    </th>
+                                    <th></th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                @Html.DisplayFor(modelItem => item.UserId)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </p>
+
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.Roles)
+                                        </td>
+
+                                        <td>
+                                            <button style="background-color:dodgerblue;border:none;color:white;border-radius:10%">@Html.ActionLink("Edit", "EditUserRoles", new { id = item.UserId }, new { @style = "color: white;" })</button>  |
+                                            <button style="background-color:dodgerblue;border:none;color:white;border-radius:10%">@Html.ActionLink("Details", "GetUserById", new { id = item.UserId }, new { @style = "color: white;" })</button>  |
+                                            <button style="background-color:dodgerblue;border:none;color:white;border-radius:10%">@Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId }, new { @style = "color: white;" })</button>
+                                        </td>
+                                    </tr>
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -80,5 +80,30 @@ namespace WebFruit.Controllers
 
             return Unauthorized("Username or password incorrect.");
         }
+
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDTO changePasswordRequestDTO)
+        {
+            if (changePasswordRequestDTO == null || !ModelState.IsValid)
+            {
+                return BadRequest("Invalid change password request.");
+            }
+
+            var user = await _userManager.FindByNameAsync(changePasswordRequestDTO.Username);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePasswordRequestDTO.CurrentPassword, changePasswordRequestDTO.NewPassword);
+            if (changePasswordResult.Succeeded)
+            {
+                return Ok("Password changed successfully.");
+            }
+
+            var errors = changePasswordResult.Errors.Select(e => e.Description);
+            return BadRequest(new { Errors = errors });
+        }
     }
 }

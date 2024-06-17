@@ -294,7 +294,105 @@ namespace FruitShopMVC.Controllers
 
         #endregion
 
-    
+        #region Users
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("Admin/AllUsersAndRoles");
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                var users = JsonConvert.DeserializeObject<List<UserWithRolesVM>>(data);
+                return View(users);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error retrieving users");
+                return View(new List<UserWithRolesVM>());
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserById(string userId)
+        {
+            SetAuthorizationHeader();
+            HttpResponseMessage response = await _httpClient.GetAsync($"Admin/UserDetails/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<UserWithRolesVM>(data);
+                return View(user);
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error retrieving user");
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUserRoles(string userId)
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync($"Admin/EditUserRoles/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<UserWithRolesVM>(data);
+                return View(model);
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error retrieving user roles");
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserRoles(UserWithRolesVM model)
+        {
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync("Admin/EditUserRoles", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(GetAllUsers));
+            }
+            else
+            {
+                string errorData = await response.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, $"Error updating user roles: {errorData}");
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            SetAuthorizationHeader();
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"Admin/DeleteUser/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(GetAllUsers));
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error deleting user");
+                return RedirectToAction(nameof(GetAllUsers));
+            }
+
+        }
+
+
+        #endregion Users
 
         #region
         public async Task<int> CalculateTotalRevenue()

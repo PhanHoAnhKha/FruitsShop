@@ -7,7 +7,6 @@ namespace FruitShopMVC.Models
         [Key]
         public int CommentId { get; set; }
         public string? Name { get; set; }
-        public string? ImageUrl { get; set; }
         public string? Email { get; set; }
         public DateTime? Created { get; set; }
         public string? Message { get; set; }

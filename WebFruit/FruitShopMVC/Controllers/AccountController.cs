@@ -64,7 +64,8 @@ namespace FruitShopMVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginRequestDTO loginRequestDTO)
 		{
-			var client = _httpClientFactory.CreateClient();
+            CreateHttpClient();
+            var client = _httpClientFactory.CreateClient();
 			client.BaseAddress = new Uri(_configuration["ApiBaseUrl"]); 
 			_logger.LogInformation("Gửi yêu cầu đăng nhập đến {url}", client.BaseAddress + "Account/Login");
 
@@ -102,6 +103,24 @@ namespace FruitShopMVC.Controllers
 			HttpContext.Session.Clear();
 			return RedirectToAction("Index", "Product");
 		}
-		
-	}
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequestDTO changePasswordRequestDTO)
+        {
+            var client = CreateHttpClient();
+            var response = await client.PostAsJsonAsync("Account/ChangePassword", changePasswordRequestDTO);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Login");
+            }
+            ModelState.AddModelError(string.Empty, "Password change failed");
+            return View(changePasswordRequestDTO);
+        }
+    }
 }

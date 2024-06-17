@@ -105,20 +105,20 @@ namespace WebFruit.Services
             }
         }
 
-        public async Task<bool> AddComment(int blogId, CommentDTO commentDTO)
+        public async Task<bool> AddComment(int newId, CommentDTO commentDTO)
         {
             try
             {
-                var blog = await _context.News.FindAsync(blogId);
-                if (blog == null)
+                var news = await _context.News.FindAsync(newId);
+                if (news == null)
                 {
                     return false;
                 }
 
                 var comment = new Comment
                 {
-                    NewId = blogId,
-                    Name = commentDTO.UserName,
+                    NewId = newId,
+                    Name = commentDTO.Name,
                     Message = commentDTO.Message,
                     Email = commentDTO.Email,
                     Created = DateTime.UtcNow,

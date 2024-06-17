@@ -33,7 +33,80 @@
     <link rel="stylesheet" href="~/assets/css/responsive.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FruitShopMVC.styles.css" asp-append-version="true" />
-    
+    <style>
+        /* Định dạng hộp thoại chatbot */
+        .chatbase-chatbot-container {
+            border: 2px solid #4CAF50; /* Màu viền xanh lá cây */
+            border-radius: 10px; /* Bo góc hộp thoại */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+        }
+
+        /* Định dạng tiêu đề hộp thoại */
+        .chatbase-chatbot-header {
+            background-color: #4CAF50; /* Màu nền xanh lá cây */
+            color: white; /* Màu chữ trắng */
+            padding: 10px; /* Khoảng cách bên trong */
+            border-radius: 10px 10px 0 0; /* Bo góc trên */
+        }
+
+        /* Định dạng nội dung tin nhắn */
+        .chatbase-message {
+            font-family: 'Arial', sans-serif; /* Font chữ Arial */
+            font-size: 14px; /* Kích thước chữ */
+        }
+
+        /* Định dạng nút gửi tin nhắn */
+        .chatbase-send-button {
+            background-color: #4CAF50; /* Màu nền nút xanh lá cây */
+            color: white; /* Màu chữ trắng */
+            border: none; /* Loại bỏ viền nút */
+            border-radius: 5px; /* Bo góc nút */
+            padding: 5px 10px; /* Khoảng cách bên trong */
+            cursor: pointer; /* Con trỏ chuột thay đổi khi di chuột vào nút */
+        }
+
+            .chatbase-send-button:hover {
+                background-color: #45a049; /* Màu nền nút khi di chuột vào */
+            }
+
+        /* Loại bỏ các thành phần không cần thiết */
+        .chatbase-some-unnecessary-element {
+            display: none; /* Ẩn phần tử */
+        }
+
+        .user-dropdown-content {
+            display: none; /* Ẩn dropdown content mặc định */
+            position: absolute;
+            background-color:none; /* Màu nền của dropdown */
+            z-index: 1; /* Đảm bảo dropdown hiển thị trên các phần tử khác */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            top: 100%; /* Hiển thị từ vị trí ngay dưới biểu tượng user */
+            right: -100px;
+            min-width: 160px; /* Độ rộng tối thiểu của dropdown */
+        }
+
+            .user-dropdown-content li {
+                padding-bottom: 10px;
+            }
+
+            .user-dropdown-content a {
+                color: white;
+                text-decoration: none;
+                display: block;
+            }
+
+                .user-dropdown-content a:hover {
+                    background-color: #f1f1f1; /* Màu nền khi hover */
+                }
+
+        .user-icon:hover .user-dropdown-content {
+            display: block; /* Hiển thị dropdown content khi hover vào user icon */
+        }
+
+    </style>
+
 </head>
 <body>
     <header>
@@ -58,34 +131,41 @@
                                     <li><a asp-controller="New" asp-action="Index">News</a></li>
                                     <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
                                     <li><a asp-controller="Product" asp-action="Shop">Shop</a></li>
-                                    <!--<li><a asp-controller="Recommend" asp-action="Index">Recommend</a></li>-->
+
 
                                     <li>
                                         <div class="header-icons">
                                             <a class="shopping-cart" asp-controller="ShoppingCart" asp-action="Index">
-                                                <i class="fas fa-shopping-cart">
-                                                    <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                                <i class="fas fa-shopping-cart position-relative">
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                                         @cartCount
+                                                        <span class="visually-hidden">unread messages</span>
                                                     </span>
                                                 </i>
                                             </a>
-                                            
+
                                             <div class="user-icon dropdown" id="user-icon">
                                                 <i class="fas fa-user" style="color: #eef1f6;"></i>
-                                                <div class="dropdown-content">
-                                                    @if (Context.Session.GetString("Username") != null)
+                                                <ul style="margin-left:-10px;" class="user-dropdown-content">
+                                                    @if (HttpContextAccessor.HttpContext.Session.GetString("Username") != null)
                                                     {
-                                                        <span> <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout (@Context.Session.GetString("Username"))</a></span>
+                                                        <li> <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                                        <li> <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ChangePassword">Change Password</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Order" asp-action="CompletedOrders">All Order</a>
+                                                        </li>
                                                     }
                                                     else
                                                     {
-                                                        <span><a asp-controller="Account" asp-action="Login">Đăng nhập</a></span>
-                                                        <span><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></span>
+                                                        <li style="float:left"><a class="dropdown-item" asp-controller="Account" asp-action="Login">Đăng nhập</a></li>
+                                                        <li style="float:left"><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
                                                     }
-                                                </div>
+                                                </ul>
+
                                             </div>
                                         </div>
                                     </li>
+
                                 </ul>
                             </nav>
                             <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
@@ -116,7 +196,7 @@
         </div>
         <!-- end search area -->
     </header>
-    <script>
+    <!--<script>
         window.embeddedChatbotConfig = {
             chatbotId: "Bjs9VHXzDnX4lI043TImR",
             domain: "www.chatbase.co"
@@ -124,6 +204,18 @@
     </script>
     <script src="https://www.chatbase.co/embed.min.js"
             chatbotId="Bjs9VHXzDnX4lI043TImR"
+            domain="www.chatbase.co"
+            defer>
+    </script>-->
+
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "f9bDe8e-8R8o166_XLh5N",
+            domain: "www.chatbase.co"
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js"
+            chatbotId="f9bDe8e-8R8o166_XLh5N"
             domain="www.chatbase.co"
             defer>
     </script>

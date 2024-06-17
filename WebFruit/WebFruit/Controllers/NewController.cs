@@ -78,10 +78,10 @@ namespace WebFruit.Controllers
             return StatusCode(StatusCodes.Status200OK, "News deleted successfully");
         }
 
-        [HttpPost("{blogId}")]
-        public async Task<IActionResult> AddComment(int blogId, [FromBody] CommentDTO commentDTO)
+        [HttpPost("{newId}")]
+        public async Task<IActionResult> AddComment(int newId, [FromBody] CommentDTO commentDTO)
         {
-            var result = await _newRepository.AddComment(blogId, commentDTO);
+            var result = await _newRepository.AddComment(newId, commentDTO);
 
             if (!result)
             {

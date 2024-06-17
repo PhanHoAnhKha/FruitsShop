@@ -145,3 +145,6 @@ C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\obj\Debug\net8.0\refint\Fr
 C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\obj\Debug\net8.0\FruitShopMVC.pdb
 C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\obj\Debug\net8.0\FruitShopMVC.genruntimeconfig.cache
 C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\obj\Debug\net8.0\ref\FruitShopMVC.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\bin\Debug\net8.0\MailKit.dll
+C:\Users\Admin\Desktop\WebFruit\WebFruit\FruitShopMVC\bin\Debug\net8.0\MimeKit.dll
